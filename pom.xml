@@ -3,7 +3,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>net.serenitybdd.starter</groupId>
-    <artifactId>gomo-web-automation-serenity</artifactId>
+    <artifactId>demo-web-automation-serenity</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
@@ -18,6 +18,12 @@
         <tags></tags>
         <parallel.tests>4</parallel.tests>
         <webdriver.base.url></webdriver.base.url>
+        <browserstack.local.version>1.0.3</browserstack.local.version>
+        <maven.failsafe-plugin.version>3.0.0-M3</maven.failsafe-plugin.version>
+        <maven.surefire-plugin.version>3.0.0-M3</maven.surefire-plugin.version>
+        <maven-enforcer-plugin.version>3.0.0-M2</maven-enforcer-plugin.version>
+        <maven.compiler-plugin.version>3.8.0</maven.compiler-plugin.version>
+
     </properties>
 
     <repositories>
@@ -56,6 +62,11 @@
             <artifactId>serenity-core</artifactId>
             <version>${serenity.version}</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.browserstack</groupId>
+            <artifactId>browserstack-local-java</artifactId>
+            <version>${browserstack.local.version}</version>
         </dependency>
         <dependency>
             <groupId>net.serenity-bdd</groupId>
@@ -177,4 +188,75 @@
             </plugin>
         </plugins>
     </build>
+    <profiles>
+        <profile>
+            <id>single</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-failsafe-plugin</artifactId>
+                        <version>${maven.failsafe-plugin.version}</version>
+                        <configuration>
+                            <includes>
+                                <include>demo/CucumberTestSuite.java</include>
+                            </includes>
+                            <reuseForks>true</reuseForks>
+                            <argLine>-Xmx1024m -XX:MaxPermSize=256m</argLine>
+                            <systemPropertyVariables>
+                                <environment>single</environment>
+                                <taskID>MY_TEST_SCHEMA_${surefire.forkNumber}</taskID>
+                            </systemPropertyVariables>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <id>local</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-failsafe-plugin</artifactId>
+                        <version>${maven.failsafe-plugin.version}</version>
+                        <configuration>
+                            <includes>
+                                <include>demo/CucumberTestSuite.java</include>
+                            </includes>
+                            <reuseForks>true</reuseForks>
+                            <argLine>-Xmx1024m -XX:MaxPermSize=256m</argLine>
+                            <systemPropertyVariables>
+                                <environment>local</environment>
+                            </systemPropertyVariables>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <id>parallel</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-failsafe-plugin</artifactId>
+                        <version>${maven.failsafe-plugin.version}</version>
+                        <configuration>
+                            <includes>
+                                <include>demo/Parallel*.java</include>
+                            </includes>
+                            <parallel>classes</parallel>
+                            <threadCount>4</threadCount>
+                            <forkCount>4</forkCount>
+                            <reuseForks>true</reuseForks>
+                            <argLine>-Xmx1024m -XX:MaxPermSize=256m</argLine>
+                            <systemPropertyVariables>
+                                <environment>parallel_${surefire.forkNumber}</environment>
+                            </systemPropertyVariables>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>
