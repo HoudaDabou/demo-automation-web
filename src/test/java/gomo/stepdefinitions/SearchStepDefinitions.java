@@ -8,9 +8,9 @@ import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.actors.OnStage;
 import net.serenitybdd.screenplay.actors.OnlineCast;
 import net.serenitybdd.screenplay.ensure.Ensure;
-import gomo.navigation.NavigateTo;
-import gomo.search.LookForInformation;
-import gomo.search.WikipediaArticle;
+import gomo.tasks.NavigateTo;
+import gomo.tasks.LookForInformation;
+import gomo.pageobjects.WikipediaArticle;
 
 public class SearchStepDefinitions {
 

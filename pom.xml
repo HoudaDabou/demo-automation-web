@@ -3,7 +3,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>net.serenitybdd.starter</groupId>
-    <artifactId>demo-web-automation-serenity</artifactId>
+    <artifactId>gomo-web-automation-serenity</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
@@ -19,8 +19,8 @@
         <parallel.tests>4</parallel.tests>
         <webdriver.base.url></webdriver.base.url>
         <browserstack.local.version>1.0.3</browserstack.local.version>
-        <maven.failsafe-plugin.version>3.0.0-M3</maven.failsafe-plugin.version>
-        <maven.surefire-plugin.version>3.0.0-M3</maven.surefire-plugin.version>
+        <maven.failsafe-plugin.version>3.0.0-M5</maven.failsafe-plugin.version>
+        <maven.surefire-plugin.version>3.0.0-M5</maven.surefire-plugin.version>
         <maven-enforcer-plugin.version>3.0.0-M2</maven-enforcer-plugin.version>
         <maven.compiler-plugin.version>3.8.0</maven.compiler-plugin.version>
 
@@ -129,11 +129,11 @@
             </plugin>
             <plugin>
                 <artifactId>maven-failsafe-plugin</artifactId>
-                <version>3.0.0-M5</version>
+                <version>${maven.failsafe-plugin.version}</version>
                 <configuration>
                     <includes>
-                        <include>**/*Test.java</include>
-                        <include>**/Test*.java</include>
+<!--                        <include>**/*Test.java</include>-->
+<!--                        <include>**/Test*.java</include>-->
                         <include>**/*TestSuite.java</include>
                         <include>**/When*.java</include>
                     </includes>
@@ -156,7 +156,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
+                <version>${maven.compiler-plugin.version}</version>
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
@@ -198,7 +198,7 @@
                         <version>${maven.failsafe-plugin.version}</version>
                         <configuration>
                             <includes>
-                                <include>demo/CucumberTestSuite.java</include>
+                                <include>gomo/SingleTest.java</include>
                             </includes>
                             <reuseForks>true</reuseForks>
                             <argLine>-Xmx1024m -XX:MaxPermSize=256m</argLine>
@@ -221,7 +221,7 @@
                         <version>${maven.failsafe-plugin.version}</version>
                         <configuration>
                             <includes>
-                                <include>demo/CucumberTestSuite.java</include>
+                                <include>gomo/CucumberTestSuite.java</include>
                             </includes>
                             <reuseForks>true</reuseForks>
                             <argLine>-Xmx1024m -XX:MaxPermSize=256m</argLine>
@@ -243,7 +243,7 @@
                         <version>${maven.failsafe-plugin.version}</version>
                         <configuration>
                             <includes>
-                                <include>demo/Parallel*.java</include>
+                                <include>gomo/Parallel*.java</include>
                             </includes>
                             <parallel>classes</parallel>
                             <threadCount>4</threadCount>
